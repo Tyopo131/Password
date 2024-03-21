@@ -14,10 +14,10 @@ int main() {
 		std::ofstream fileWrite;
 	choosePassword:
 		std::cout << "Passwords must have 1 special character and must be at least 5 letters long.\n\n";
-		std::cout << "Enter a unique password: "; 
+		std::cout << "Enter a unique password: ";
 		std::cin >> password;
-		
-	
+
+
 		bool passwordValid = false;
 		if (password.length() >= 5) {
 
@@ -35,8 +35,8 @@ int main() {
 		fileWrite << password;
 		passwordValid = true;
 		system("CLS");
-		
-		
-		
+
+
+
 	}
 }
