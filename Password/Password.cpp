@@ -36,7 +36,5 @@ int main() {
 		passwordValid = true;
 		system("CLS");
 
-
-
 	}
 }
