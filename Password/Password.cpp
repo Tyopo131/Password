@@ -2,7 +2,7 @@
 #include <filesystem>
 #include <fstream>
 #include <cstdlib>
-
+#pragma message("Don't end up in the debugging dungeon!")
 // Include exit-choice-lib:
 #ifdef _DEBUG
 #pragma comment(lib, "StandaloneExitChoice.debug.lib")
@@ -21,22 +21,26 @@ int main() {
 	if (!fileExists) {
 		std::ofstream fileWrite;
 	choosePassword:
-		std::cout << "Passwords must have 1 special character and must be at least 5 letters long.\n\n";
+		std::cout << "Passwords must have 1 special character, must have a number and must be at least 5 letters long.\n\n";
 		std::cout << "Enter a unique password: ";
 		std::cin >> password;
 
 
 		bool passwordValid = false;
+		bool hasSpecialCharacter = false, hasNumber = false;
 		if (password.length() >= 5) {
 
 			for (int timer = 0; timer < password.length(); timer++) {
-				if ((password[timer] > 32 && password[timer] < 48) || (password[timer] > 57 && password[timer] < 65)) {
-					passwordValid = true;
-					break;
+				if ((password[timer] > 32 && password[timer] < 48) || (password[timer] > 57 && password[timer] < 65) || password[timer] == '£') {
+					hasSpecialCharacter = true;
+
 				}
+				if (password[timer] > 47 && password[timer] < 58) hasNumber = true;
+
 
 			}
 		}
+		passwordValid = hasSpecialCharacter && hasNumber;
 		if (!passwordValid) goto choosePassword;
 		std::cout << "Password saved";
 		fileWrite.open(fileName);
@@ -54,20 +58,23 @@ int main() {
 		if (password == passwordEntered) {
 			std::cout << "Correct!\n\n";
 		choosePassword2:
-			std::cout << "Passwords must have 1 special character and must be at least 5 letters long.\n\nEnter new password: ";
+			std::cout << "Passwords must have 1 special character, must have a number and must be at least 5 letters long.\n\nEnter new password: ";
 			read_password.close();
 			std::cin >> password; // We're not using password anymore, might as well save memory by reusing it.
-			bool passwordValid = false;
+			bool hasSpecialCharacter = false, hasNumber = false;
 			if (password.length() >= 5) {
 
+
 				for (int timer = 0; timer < password.length(); timer++) {
-					if ((password[timer] > 32 && password[timer] < 48) || (password[timer] > 57 && password[timer] < 65)) {
-						passwordValid = true;
-						break;
+					if ((password[timer] > 32 && password[timer] < 48) || (password[timer] > 57 && password[timer] < 65) || password[timer] == '£') {
+						hasSpecialCharacter = true;
+						
 					}
+					if (password[timer] > 47 && password[timer] < 58) hasNumber = true;
 
 				}
 			}
+			bool passwordValid = hasSpecialCharacter && hasNumber;
 			if (passwordValid) {
 				std::ofstream write_password(fileName);
 				write_password << password;
