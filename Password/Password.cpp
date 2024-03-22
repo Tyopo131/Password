@@ -3,6 +3,15 @@
 #include <fstream>
 #include <cstdlib>
 
+// Include exit-choice-lib:
+#ifdef _DEBUG
+#pragma comment(lib, "StandaloneExitChoice.debug.lib")
+#else
+#pragma comment(lib, "StandaloneExitChoice.release.lib")
+#endif
+#include "StandaloneExitChoice.h"
+using namespace stdln;
+
 using namespace std::filesystem;
 int main() {
 	const char* fileName = "password.pass";
@@ -70,8 +79,14 @@ int main() {
 		else {
 			std::cout << "Incorrect!\n\n";
 			goto enterPassword;
-	}
+		}
 
 
 	}
+	std::cout << "Press A to change password or E to exit: ";
+	restartKey1 = 'a';
+	restartKey2 = 'A';
+	exitKey1 = 'e';
+	exitKey2 = 'E';
+	exitchoice();
 }
